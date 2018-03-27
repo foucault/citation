@@ -144,7 +144,9 @@ def journal_abbrev(name):
 def get_entry(doi):
     url = 'https://dx.doi.org/%s' % doi
 
-    raw = requests.get(url, headers={'Accept':'text/x-bibliography;style=bibtex'})
+    raw = requests.get(url, \
+        headers={'Accept':'text/x-bibliography;style=bibtex'},
+        timeout=2)
     if raw.ok and raw.status_code == 200:
         db = bibtexparser.loads(raw.content.decode('utf-8'))
         entry = db.entries[0]
