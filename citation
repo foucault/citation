@@ -27,7 +27,7 @@ def unix_data_home():
 
 
 def windows_data_home():
-    return environ['%APPDATA%']
+    return environ['APPDATA']
 
 
 def darwin_data_home():
