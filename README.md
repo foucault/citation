@@ -7,7 +7,7 @@ About
 citations for use in bibtex just by providing its Document Object Identifier
 (DOI). Cut and paste the output into your `.bib` file and you are ready to go!
 
-    $ citation '10.1007/bf00883088'
+    $ citation 10.1007/bf00883088
     @article{Foti_1977,
      author = {Foti, G. and Rimini, E. and Vitali, G. and Bertolotti, M.},
      doi = {10.1007/bf00883088},
@@ -28,7 +28,7 @@ citations for use in bibtex just by providing its Document Object Identifier
 If you are using vim you can do that directly from your editor by using the
 following command
 
-    :r !citation '10.1007/bf00883088'
+    :r !citation 10.1007/bf00883088
 
 and the bibtex entry will be appended into your current buffer.
 
