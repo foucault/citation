@@ -19,6 +19,11 @@ MONTH_RE = re.compile("\s*month\s*=\s*\{\s*?(jan|feb|mar|apr|may|jun|jul|aug|sep
 LATEST_ISSN = "http://www.issn.org/wp-content/uploads/2013/09/LTWA_20160915.txt"
 ISSN_UPD = datetime.date(2016, 9, 15)
 
+
+def key_from_phrase(title):
+    return "".join([x[0] for x in title.split()]).strip().lower()
+
+
 def unix_data_home():
     try:
         return environ['XDG_DATA_HOME']
@@ -157,6 +162,24 @@ def get_entry(doi):
         if 'month' in entry.keys():
             month = entry['month'].lower()
             entry['month'] = month
+
+        try:
+            authors = entry['author'].split(' and ')
+            first_author = authors[0].split(',')
+            if 'shortjournal' in entry.keys():
+                suffix = key_from_phrase(entry['shortjournal'])
+            elif 'journal' in entry.keys():
+                suffix = key_from_phrase(entry['journal'])
+            elif 'publisher' in entry.keys():
+                suffix = key_from_phrase(entry['publisher'])
+            else:
+                suffix = ''
+
+            authorkey = '%s%s%s' % (first_author[0], entry['year'], suffix)
+            entry['ID'] = authorkey
+        except (IndexError, KeyError):
+            pass
+
         raw_result = bibtexparser.dumps(db).strip()
         lines = []
         for line in raw_result.splitlines():
